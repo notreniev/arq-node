@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Arquitetura NodeJS na PROCERGS",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/notreniev/arq-node.git"
+  },
   "scripts": {
     "test": "npm run test",
     "dev": "NODE_ENV=development nodemon dist/index.js",

@@ -1,25 +1,52 @@
 import { config } from "../common/config";
 
 const Sequelize = require('sequelize')
+const conf = config(process.env.NODE_ENV || 'development')
+const driver = new Sequelize(
+    conf.database,
+    conf.username,
+    conf.password,
+    {
+        host: conf.host,
+        dialect: conf.dialect,
+        dialectOptions: {
+            socketPath: conf.dialectOptions.socketPath
+        }
+    })
 
 export class User {
-    config = config(process.env.NODE_ENV || 'development')
-    sequelize = new Sequelize(this.config.database, this.config.username, this.config.password, {
-        host: this.config.host,
-        dialect: this.config.dialect,
-        dialectOptions: {
-            socketPath: this.config.dialectOptions.socketPath
-        }
-    });
-
     constructor() {
-        this.sequelize.authenticate()
-            .then(() => {
-                console.log('Connection has been established successfully.');
-            })
-            .catch(err => {
-                console.error('Unable to connect to the database:', err);
-            });
+        this.create()
+    }
+
+    create = async () => {
+        const User = driver.define('users', {
+            id: {
+                type: Sequelize.INTEGER,
+                required: true,
+                primaryKey: true,
+                autoIncrement: true
+            },
+            nome: {
+                type: Sequelize.STRING,
+                required: true
+            },
+            email: {
+                type: Sequelize.STRING,
+                required: true
+            }
+        },{
+            tableName: 'users',
+            freezeTableName: false,
+            timestamps: false
+        })
+
+        User.create({
+            nome: 'Sil',
+            email: 'baby@gmail.com'
+        })
+
+        await User.sync()
     }
 
 }

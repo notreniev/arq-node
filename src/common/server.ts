@@ -8,11 +8,11 @@ import { Router } from './interfaces/router.interface';
 export class Server {
 
   config = config(process.env.NODE_ENV || 'development')
-  
+
   constructor() { }
-  
-  private loadServer = (routers: Router[]): Promise<any> => {
-    return new Promise((resolve, reject) => {     
+
+  private loadServer(): Promise<any> {
+    return new Promise((resolve, reject) => {
       try {
         app.listen(this.config.port, () => resolve(app))
       } catch (error) {
@@ -21,15 +21,16 @@ export class Server {
     })
   }
 
-  private initializeRoutes(routers: Router[]):void {
+  private initializeRoutes(routers: Router[]): void {
     for (let router of routers) {
       router.applyRoutes(app)
     }
 
     const user = new User()
+    
   }
 
   bootstrap = async (routers: Router[]) => {
-    await this.loadServer(routers).then(() => this.initializeRoutes(routers))
+    await this.loadServer().then(() => this.initializeRoutes(routers))
   }
 }
