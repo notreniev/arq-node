@@ -47,6 +47,10 @@ export class User {
         })
 
         await User.sync()
+
+        const result = await User.findAll({raw: true})
+        console.log('result', result)
+        
     }
 
 }
