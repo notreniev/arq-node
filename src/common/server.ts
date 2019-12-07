@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 
-import { User } from '../models/user.model';
+import { UserModel } from '../models/user.model';
 import { config } from './config';
 import { Router } from './interfaces/router.interface';
 
@@ -26,7 +26,7 @@ export class Server {
       router.applyRoutes(app)
     }
 
-    const user = new User()
+    const user = new UserModel()
     
   }
 

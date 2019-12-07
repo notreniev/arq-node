@@ -27,3 +27,4 @@ if (!db) {
 }
 
 export default <DBConnection>db
+export const mySequelize = db.sequelize
